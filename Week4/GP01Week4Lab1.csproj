@@ -75,6 +75,7 @@
     <None Include="Content\bin\Windows\see through circle.xnb" />
     <None Include="Content\bin\Windows\sign_yield.xnb" />
     <None Include="Content\bin\Windows\Yellow Box.xnb" />
+    <None Include="Content\Fonts\Font.spritefont" />
     <None Include="Content\obj\Windows\.mgcontent" />
     <None Include="Content\obj\Windows\background.mgcontent" />
     <None Include="Content\obj\Windows\body.mgcontent" />

@@ -13,6 +13,7 @@ namespace Sprites
         public Vector2 Position;
         public Rectangle BoundingRect;
         public bool Visible = true;
+        public string MessageBeside = "";
 
         public SimpleSprite(Texture2D spriteImage,
                             Vector2 startPosition)
@@ -35,6 +36,13 @@ namespace Sprites
             BoundingRect = new Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
             BoundingRect.X = (int)Position.X;
             BoundingRect.Y = (int)Position.Y;
+        }
+
+        public bool InCollision(SimpleSprite other)
+        {
+            return BoundingRect.Intersects(other.BoundingRect);
+            
+
         }
     }
 }

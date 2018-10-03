@@ -15,6 +15,9 @@ namespace Week4
 
         SimpleSprite background, character1, character2;
 
+        string collisionText = "";
+        SpriteFont gameFont;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,6 +45,7 @@ namespace Week4
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            gameFont = Content.Load<SpriteFont>(@"Fonts\Font");
 
             Texture2D _bktx = Content.Load < Texture2D >("background");
             background = new SimpleSprite(_bktx, Vector2.Zero);
@@ -71,13 +75,39 @@ namespace Week4
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            float speed = 5.0f;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            
+            Vector2 previousPos1 = character1.Position;
+            Vector2 previousPos2 = character2.Position;
             // TODO: Add your update logic here
+            if(Keyboard.GetState().IsKeyDown(Keys.A))
+            { character2.Move(new Vector2(-1, 0) * speed); }
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            { character2.Move(new Vector2(1, 0) * speed); }
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            { character2.Move(new Vector2(0, -1) * speed); }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            { character2.Move(new Vector2(0, 1) * speed); }
 
+            if (!GraphicsDevice.Viewport.Bounds.Contains(character2.BoundingRect))
+            {
+                character2.Move(previousPos2 - character2.Position);
+            }
             base.Update(gameTime);
+
+
+            if (character1.InCollision(character2))
+            {
+                collisionText = "We are in collision!";
+
+            }
+            else
+                collisionText = "Not Colliding.";
+
+
+
+
         }
 
         /// <summary>
@@ -91,7 +121,7 @@ namespace Week4
             background.draw(spriteBatch);
             character1.draw(spriteBatch);
             character2.draw(spriteBatch);
-
+            spriteBatch.DrawString(gameFont, collisionText, new Vector2(10, 10), Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here
