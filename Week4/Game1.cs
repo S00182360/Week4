@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprites;
 
 namespace Week4
 {
@@ -11,6 +12,8 @@ namespace Week4
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        SimpleSprite background, character1, character2;
 
         public Game1()
         {
@@ -40,6 +43,15 @@ namespace Week4
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Texture2D _bktx = Content.Load < Texture2D >("background");
+            background = new SimpleSprite(_bktx, Vector2.Zero);
+            Texture2D _char1 = Content.Load<Texture2D>("Down Arrow");
+            character1 = new SimpleSprite(_char1, Vector2.One);
+            Texture2D _char2 = Content.Load<Texture2D>("body");
+            character2 = new SimpleSprite(_char2, Vector2.Zero);
+
+
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -62,6 +74,7 @@ namespace Week4
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -74,6 +87,12 @@ namespace Week4
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            background.draw(spriteBatch);
+            character1.draw(spriteBatch);
+            character2.draw(spriteBatch);
+
+            spriteBatch.End();
 
             // TODO: Add your drawing code here
 
